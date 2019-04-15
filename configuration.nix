@@ -49,7 +49,8 @@
   i18n = {
     consoleFont= "latarcyrheb-sun32";
     #consoleKeyMap = "us";
-    consoleUseXkbConfig = true;
+    consoleKeyMap = "emacs2";
+    #consoleUseXkbConfig = true;
     defaultLocale = "en_US.UTF-8";
   };
 
