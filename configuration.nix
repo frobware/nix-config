@@ -59,7 +59,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    wget vim firefox emacs zsh bash bash-completion
+    wget vim firefox emacs zsh bash bash-completion gnumake
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
