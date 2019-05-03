@@ -9,6 +9,7 @@
 
   imports = [
     ./hardware-configuration.nix
+    ./desktop.nix
   ];
 
   # Use the GRUB 2 boot loader.
@@ -47,11 +48,12 @@
 
   # Select internationalisation properties.
   i18n = {
-    consoleFont= "latarcyrheb-sun32";
-    #consoleKeyMap = "us";
-    consoleKeyMap = "emacs2";
-    #consoleUseXkbConfig = true;
+    # big font in the console
     defaultLocale = "en_US.UTF-8";
+    consoleFont= "latarcyrheb-sun32";
+    consoleKeyMap = "emacs2";
+    #consoleKeyMap = "us";
+    #consoleUseXkbConfig = true;
   };
 
   # Set your time zone.
@@ -60,7 +62,18 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    wget vim firefox emacs zsh bash bash-completion gnumake
+    ag
+    bash
+    bash-completion
+    emacs
+    firefox
+    gnome3.dconf
+    gnome3.gnome-tweaks
+    gnumake
+    vim
+    wget
+    xcalib
+    zsh
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -69,9 +82,6 @@
   # programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
 
   # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -87,21 +97,48 @@
   # hardware.pulseaudio.enable = true;
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.layout = "us";
-  services.xserver.xkbOptions = "ctrl:nocaps";
+  # services.xserver.enable = true;
+  # services.xserver.layout = "us";
+  # services.xserver.xkbOptions = "ctrl:nocaps";
 
   # Enable touchpad support.
-  services.xserver.libinput.enable = true;
-  services.xserver.synaptics.enable = false;
+  # services.xserver.libinput.enable = true;
+  # services.xserver.synaptics.enable = false;
 
-  services.xserver.config = ''
-    Section "InputClass"
-    Identifier     "Enable libinput for TrackPoint"
-    MatchIsPointer "on"
-    Driver         "libinput"
-    EndSection
-  '';
+  # services.xserver.config = ''
+  #   Section "InputClass"
+  #   Identifier     "Enable libinput for TrackPoint"
+  #   MatchIsPointer "on"
+  #   Driver         "libinput"
+  #   EndSection
+  # '';
+
+
+  # services.xserver = {
+  #   enable = true;
+  #   layout = "us";
+  #   xkbOptions = "ctrl:nocaps";
+  #   libinput.enable = true;
+  #   synaptics.enable = false;
+  #   config = ''
+  #     Section "InputClass"
+  #     Identifier     "Enable libinput for TrackPoint"
+  #     MatchIsPointer "on"
+  #     Driver         "libinput"
+  #     EndSection
+  #   '';
+  # };
+
+  # services.xserver.gtk = {
+  #   fontName = "DejaVu Sans 10";
+  #   iconThemeName = "Adwaita";
+  #   themeName= "Adapta-Nokto-Eta";
+  #   gtk3.extraConfig = {
+  #     gtk-recent-files-max-age = 0;
+  #     gtk-recent-files-limit = 0;
+  #     gtk-cursor-blink = false;
+  #   };
+  # };
 
   # Enable the KDE Desktop Environment.
   # services.xserver.displayManager.sddm.enable = true;
@@ -109,18 +146,28 @@
 
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome3.enable = true;
+
   services.dbus.packages = with pkgs; [ gnome3.dconf ];
-  
+
+  services.xserver.desktopManager.gnome3.extraGSettingsOverrides = ''
+    [org.gnome.shell]
+    enable-hot-corners=false
+    [org.gtk.Settings.FileChooser]
+    sort-directories-first=true
+    [org.gnome.desktop.interface]
+    gtk-key-theme=Emacs
+  '';
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   # users.users.guest = {
   #   isNormalUser = true;
   #   uid = 1000;
   # };
 
-  # This value determines the NixOS release with which your system is to be
-  # compatible, in order to avoid breaking some software such as database
-  # servers. You should change this only after NixOS release notes say you
-  # should.
+  # This value determines the NixOS release with which your system is
+  # to be compatible, in order to avoid breaking some software such as
+  # database servers. You should change this only after NixOS release
+  # notes say you should.
   system.stateVersion = "18.09"; # Did you read the comment?
 
   programs.zsh.enable = true;
@@ -138,7 +185,7 @@
   ];
 
   users.extraGroups = [
-  { 
+  {
     name = "share";
     gid = 1001;
   }
@@ -146,9 +193,12 @@
 
   hardware.trackpoint = {
     enable = true;
-    sensitivity = 255;
-    speed = 255;
-    device = "TPPS/2 Elan TrackPoint";
-    #device = "PS/2 Generic Mouse";
+    sensitivity = 230;
+    speed = 250;
+    device = "TPPS/2 IBM TrackPoint";
   };
+
+  # Enable the OpenSSH daemon.
+  services.openssh.enable = true;
+  services.openssh.forwardX11 = true;
 }
