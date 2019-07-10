@@ -39,10 +39,24 @@
     enableGhostscriptFonts = true;
     fontconfig.cache32Bit = true;
     fontconfig.ultimate.preset = "osx";
+    fontconfig.ultimate.substitutions = "ms";
 
     fonts = with pkgs; [
       terminus_font
       source-code-pro
+      anonymousPro
+      corefonts
+      dejavu_fonts
+      freefont_ttf
+      google-fonts
+      inconsolata
+      liberation_ttf
+      noto-fonts
+      powerline-fonts
+      source-code-pro
+      terminus_font
+      ttf_bitstream_vera
+      ubuntu_font_family
     ];
   };
 
