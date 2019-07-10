@@ -64,10 +64,8 @@
   i18n = {
     # big font in the console
     defaultLocale = "en_US.UTF-8";
-    consoleFont= "latarcyrheb-sun32";
+    consoleFont = "latarcyrheb-sun32";
     consoleKeyMap = "emacs2";
-    #consoleKeyMap = "us";
-    #consoleUseXkbConfig = true;
   };
 
   # Set your time zone.
