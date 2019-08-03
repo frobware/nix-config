@@ -77,6 +77,7 @@
     ag
     bash
     bash-completion
+    bind
     emacs
     firefox
     gnome3.dconf
@@ -118,39 +119,38 @@
   # services.xserver.synaptics.enable = false;
 
   # services.xserver.config = ''
-  #   Section "InputClass"
-  #   Identifier     "Enable libinput for TrackPoint"
-  #   MatchIsPointer "on"
-  #   Driver         "libinput"
-  #   EndSection
-  # '';
-
+    #   Section "InputClass"
+    #   Identifier     "Enable libinput for TrackPoint"
+    #   MatchIsPointer "on"
+    #   Driver         "libinput"
+    #   EndSection
+    # '';
 
   # services.xserver = {
-  #   enable = true;
-  #   layout = "us";
-  #   xkbOptions = "ctrl:nocaps";
-  #   libinput.enable = true;
-  #   synaptics.enable = false;
-  #   config = ''
-  #     Section "InputClass"
-  #     Identifier     "Enable libinput for TrackPoint"
-  #     MatchIsPointer "on"
-  #     Driver         "libinput"
-  #     EndSection
-  #   '';
-  # };
+    #   enable = true;
+    #   layout = "us";
+    #   xkbOptions = "ctrl:nocaps";
+    #   libinput.enable = true;
+    #   synaptics.enable = false;
+    #   config = ''
+    #     Section "InputClass"
+    #     Identifier     "Enable libinput for TrackPoint"
+    #     MatchIsPointer "on"
+    #     Driver         "libinput"
+    #     EndSection
+    #   '';
+    # };
 
   # services.xserver.gtk = {
-  #   fontName = "DejaVu Sans 10";
-  #   iconThemeName = "Adwaita";
-  #   themeName= "Adapta-Nokto-Eta";
-  #   gtk3.extraConfig = {
-  #     gtk-recent-files-max-age = 0;
-  #     gtk-recent-files-limit = 0;
-  #     gtk-cursor-blink = false;
-  #   };
-  # };
+    #   fontName = "DejaVu Sans 14";
+    #   iconThemeName = "Adwaita";
+    #   themeName= "Adapta-Nokto-Eta";
+    #   gtk3.extraConfig = {
+      #     gtk-recent-files-max-age = 0;
+      #     gtk-recent-files-limit = 0;
+      #     gtk-cursor-blink = false;
+      #   };
+    # };
 
   # Enable the KDE Desktop Environment.
   # services.xserver.displayManager.sddm.enable = true;
@@ -171,46 +171,65 @@
   '';
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  # users.users.guest = {
-  #   isNormalUser = true;
-  #   uid = 1000;
-  # };
+    # users.users.guest = {
+      #   isNormalUser = true;
+      #   uid = 1000;
+      # };
 
-  # This value determines the NixOS release with which your system is
-  # to be compatible, in order to avoid breaking some software such as
-  # database servers. You should change this only after NixOS release
-  # notes say you should.
-  system.stateVersion = "19.03"; # Did you read the comment?
+    # This value determines the NixOS release with which your system is
+      # to be compatible, in order to avoid breaking some software such as
+    # database servers. You should change this only after NixOS release
+    # notes say you should.
+    system.stateVersion = "19.03"; # Did you read the comment?
 
-  programs.zsh.enable = true;
+    programs.zsh.enable = true;
 
-  users.extraUsers = [
-  {
-    name = "aim";
-    uid = 1000;
-    group = "users";
-    extraGroups = [ "wheel" "networkmanager" "share" ];
-    description = "Andrew McDermott";
-    home = "/home/aim";
-    shell = "/run/current-system/sw/bin/zsh";
-  }
-  ];
+    users.extraUsers = [
+      {
+        name = "aim";
+        uid = 1000;
+        group = "users";
+        extraGroups = [ "wheel" "networkmanager" "share" ];
+        description = "Andrew McDermott";
+        home = "/home/aim";
+        shell = "/run/current-system/sw/bin/zsh";
+      }
+    ];
 
-  users.extraGroups = [
-  {
-    name = "share";
-    gid = 1001;
-  }
-  ];
+    users.extraGroups = [
+      {
+        name = "share";
+        gid = 1001;
+      }
+    ];
 
-  hardware.trackpoint = {
-    enable = true;
-    sensitivity = 230;
-    speed = 250;
-    device = "TPPS/2 IBM TrackPoint";
-  };
+    hardware.trackpoint = {
+      enable = true;
+      sensitivity = 200;
+      speed = 250;
+      device = "TPPS/2 IBM TrackPoint";
+    };
 
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-  services.openssh.forwardX11 = true;
+    # services.xserver.gtk = {
+      #   enable = true;
+      #   font = {
+        #     name = "DejaVu Sans 14";
+        #     package = pkgs.dejavu_fonts;
+        #   };
+      #   iconTheme = {
+        #     name = "Adwaita";
+        #     package = pkgs.gnome3.adwaita-icon-theme;
+        #   };
+      #   theme = {
+        #     name = "Adapta-Nokto-Eta";
+        #     package = pkgs.adapta-gtk-theme;
+        #   };
+      # };
+
+    # Enable the OpenSSH daemon.
+    services.openssh.enable = true;
+    services.openssh.forwardX11 = true;
+
+    services.thinkfan.enable = false;
+    services.acpid.enable = true;
 }
