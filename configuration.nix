@@ -5,6 +5,12 @@
 { config, pkgs, ... }:
 
 {
+  nixpkgs.overlays = [
+    (import (builtins.fetchTarball {
+      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+    }))
+  ];
+
   nixpkgs.config.allowUnfree = true;
 
   imports = [
@@ -87,6 +93,7 @@
     wget
     xcalib
     zsh
+    chrome-gnome-shell
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
